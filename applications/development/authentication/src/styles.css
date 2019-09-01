@@ -1,0 +1,35 @@
+.link-text{
+    text-decoration: none;
+}
+
+.signin-options{
+    float: right;
+    cursor: pointer;
+    color: #7d858c;
+    margin-top: 8px;
+}
+
+.logo-image{
+    width: 30px;
+    margin-right: 10px;
+}
+
+.logo-text:hover{
+    color: #fff !important;
+}
+
+.form-box{
+    min-height: 350px;
+}
+
+.random-quote{
+    text-align: center;
+    font-style: italic;
+    color: #7d858c;
+    cursor: default;
+    quotes: '\00AB' '\00BB' '\201E' '\201C';
+}
+
+.signin-btn{
+    float: left;
+}
