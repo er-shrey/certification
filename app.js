@@ -11,6 +11,7 @@ const request = require('request');
 
 var apiCall = require('./routes/apiCall');
 var login = require('./routes/login');
+var certification = require('./routes/certification');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use(session({
 app.use('/', login);
 app.use('/login', login);
 app.use('/apiCall', apiCall);
+app.use('/certification', certification);
 
 app.use(express.static('applications/production/authentication/'));
 app.use('/assets', express.static(path.join(__dirname, 'applications/production/authentication/')));

@@ -1,5 +1,5 @@
 {
 	"port":3000,
-	"baseHeader" :"http://localhost:8000",
+	"baseHeader" :"http://localhost:8000/",
 	"tokenSecretKey":"dz-e6*6-fo*c4zh^mjihqcw2)#zea@z&_vnrz08#-^2utxxc*b"
 }

@@ -1,3 +1,4 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 .link-text{
     text-decoration: none;
 }
@@ -23,6 +24,7 @@
 }
 
 .random-quote{
+    width: 100%;
     text-align: center;
     font-style: italic;
     color: #7d858c;
@@ -32,4 +34,8 @@
 
 .signin-btn{
     float: left;
+}
+
+.errorMessage{
+    background-color: #f5929b;
 }

@@ -20,16 +20,16 @@ router.get('/', function(req, res, next){
 	res.render(loginPageUrl);
 });
 
-router.post('/api/loginValidate', function(req, res, next) {
+router.post('/loginValidate', function(req, res, next) {
 	request({
-		url: configApi.baseHeader+configApi.apiUrls.userLogin,
+		url: configApi.baseHeader+"skillcall/login",
 		form:{
 			username:	req.body["username"],
 			password:	b64DecodeUnicode(req.body["password"])
 		},
 		method: 'POST',
 		headers:{
-			'User-Agent'  :       'Super Agent/0.0.1',
+			'User-Agent'  :     'Super Agent/0.0.1',
 			'Content-Type':     'application/x-www-form-urlencoded'
 		}
     },function(error, response, body){
@@ -49,18 +49,6 @@ router.post('/api/loginValidate', function(req, res, next) {
 					pageUrl	  :  landingPageUrl,              //*** Application OR Config
 					token	  :  token
 				});
-				/*---------------update user login information in user log table---------------*/
-				var urltext = configApi.baseHeader+configApi.apiUrls.getLogTime+'&ip='+(req.ip)
-				request({
-					url:urltext,
-					form: {},
-					method: 'GET',
-					headers:{
-						'User-Agent':       'Super Agent/0.0.1',
-						'Content-Type':     'application/x-www-form-urlencoded',
-						'Authorization':	'JWT '+token,
-					}
-				}, function(error, response, body){});
 			}else if(jsonResponse["non_field_errors"]){
 				res.json({
 					status  : "FAILED",
@@ -76,7 +64,7 @@ router.post('/api/loginValidate', function(req, res, next) {
 	});
 });
 
-router.post('/api/forgotPassword', function(req, res, next) {
+router.post('/forgotPassword', function(req, res, next) {
 	request({
 		method: 'POST',
 		url: configApi.baseHeader+configApi.apiUrls.forgotPassword,
@@ -110,7 +98,7 @@ router.post('/api/forgotPassword', function(req, res, next) {
 	}); 
 });
 
-router.post('/api/resetPassword', function(req, res, next) {
+router.post('/resetPassword', function(req, res, next) {
 	var password= req.body["password"]; 
 	var token = req.body["token"];
 	request({
@@ -146,7 +134,7 @@ router.post('/api/resetPassword', function(req, res, next) {
 	});
 });
 
-router.get('/api/logout', function(req, res, next) {
+router.get('/logout', function(req, res, next) {
 	var token=req.session.token;
 	var params = {};
 	request({
@@ -165,57 +153,6 @@ router.get('/api/logout', function(req, res, next) {
 		}else{
 			req.session.destroy();
 			res.send('');
-		}
-	});
-});
-
-router.post('/api/refreshtoken', function(req, res, next) {
-	var currentToken = req.session['token'];
-	request({
-		url: configApi.baseHeader+configApi.apiUrls.refreshtoken,
-		form: {token:currentToken},
-		method: 'POST',
-		headers:{
-				'User-Agent':       'Super Agent/0.0.1',
-				'Content-Type':     'application/x-www-form-urlencoded'
-		}
-	}, function(error, response, body){
-		if(error){
-			res.json({
-				status  : "ERROR",
-				error	:  error
-			});
-		}else{
-			var json = JSON.parse(body);
-			if(json.token){
-				req.session['loginStatus'] = true;
-				req.session['token'] = json.token;
-				res.json({
-					token	:json.token,
-					status	:1,
-					message	: 'success' 
-				});
-				/*---------------update user token information in login log table---------------*/
-				var urltext = configApi.baseHeader+configApi.apiUrls.loginAttempt
-				request({
-					url:urltext,
-					form: {
-						"old_token":'JWT '+currentToken
-					},
-					method: 'GET',
-					headers:{
-						'User-Agent':       'Super Agent/0.0.1',
-						'Content-Type':     'application/x-www-form-urlencoded',
-						'Authorization':	'JWT '+req.session['token'],
-					}
-				}, function(error, response, body){});
-			}
-			else{
-				res.json({
-					status	:0,
-					message	: 'failure'
-				});
-			}
 		}
 	});
 });

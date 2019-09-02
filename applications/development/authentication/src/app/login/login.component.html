@@ -56,13 +56,13 @@
                   <form class="form-box" *ngIf="signin">
                     <h3 class="h4 text-black mb-4">Sign In</h3>
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Email Addresss">
+                      <input type="text" class="form-control" placeholder="Email Addresss" [(ngModel)]="loginUserName" name="username">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control" placeholder="Password">
+                      <input type="password" class="form-control" placeholder="Password" [(ngModel)]="loginPassword" name="password">
                     </div>
                     <div class="form-group signin-btn">
-                      <input type="button" class="btn btn-primary btn-pill btn-app-normal" value="Sign in">
+                      <input type="button" class="btn btn-primary btn-pill btn-app-normal" value="Sign in" [disabled]="loginBtnDisable" (click)="signIn()">
                     </div>
                     <label class="signin-options" (click)="forgotPass()">Forgot Password</label>
                     <label class="random-quote">"{{randomQuote}}"</label>
@@ -81,7 +81,7 @@
                       <div class="form-group">
                         <input type="button" class="btn btn-primary btn-pill btn-app-normal" value="Sign Up">
                       </div>
-                    </form>
+                  </form>
                 </div>
               </div>
             </div>

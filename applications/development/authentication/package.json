@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open --host 0.0.0.0 --port 5200",
+    "start": "ng serve --proxy-config ./proxy.conf.json --open --host 0.0.0.0 --port 5100 ",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -12,11 +12,13 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "6.0.0",
+    "@angular/cdk": "6.0.0",
     "@angular/common": "6.0.0",
     "@angular/compiler": "6.0.0",
     "@angular/core": "6.0.0",
     "@angular/forms": "6.0.0",
     "@angular/http": "6.0.0",
+    "@angular/material": "6.0.0",
     "@angular/platform-browser": "6.0.0",
     "@angular/platform-browser-dynamic": "6.0.0",
     "@angular/router": "6.0.0",
