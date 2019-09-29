@@ -22,6 +22,15 @@ export class LoginComponent implements OnInit {
   loginPassword = "";
   loginBtnDisable = false;
 
+  platformDetails = {
+    "totalUsers": 0,
+    "totalCourses":0,
+    "totalCertificates":0,
+    "totalMentors":0
+  };
+
+  mentorList = [];
+
   quotes = [
     "Push yourself, because no one else is going to do it for you",
     "There is no substitute for hard work",
@@ -39,6 +48,7 @@ export class LoginComponent implements OnInit {
       easing: 'slide',
       once: false
     });
+    this.getPlatformInfo();
     this.genRandomQuote();
   }
   
@@ -89,5 +99,16 @@ export class LoginComponent implements OnInit {
       verticalPosition: 'bottom',
       horizontalPosition: 'right',
     });
-  }s
+  }
+
+  getPlatformInfo(){
+    var params = {
+      url:"openAPIs/getPlatformInfo",
+      data:{}
+    };
+    this.apiCall.postRequest('/apiCall/getAllData', params).subscribe(data => {
+      this.mentorList = data['mentorList'];
+      this.platformDetails = data['platformDetails'];
+    });
+  }
 }

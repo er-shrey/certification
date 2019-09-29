@@ -16,12 +16,40 @@ router.post('/getData', function(req, res, next) {
 	request({
 		url	:	configApi.baseHeader+req.body.url,
 		qs	:	params,
-		method:	'GET',
+		method:	'POST',
 		json:	true, 
 		headers:{
 			'User-Agent':       'Super Agent/0.0.1',
 			'Content-Type':     'application/x-www-form-urlencoded',
 			'Authorization':	"JWT "+token,
+		}
+	},function(error, response, body){
+		if(error){
+			console.log(error);
+		}else{
+			var statusCode = response.statusCode;
+			if(statusCode !== 200){
+				res.status(statusCode).json(body);
+			}else{
+				res.json(body);
+			}
+		}
+	});
+});
+
+router.post('/getAllData', function(req, res, next) {
+	var params = {};
+	if(req.body.data){
+		var params = req.body.data;
+	}
+	request({
+		url	:	configApi.baseHeader+req.body.url,
+		qs	:	params,
+		method:	'POST',
+		json:	true, 
+		headers:{
+			'User-Agent':       'Super Agent/0.0.1',
+			'Content-Type':     'application/x-www-form-urlencoded',
 		}
 	},function(error, response, body){
 		if(error){
