@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as AOS from 'aos';
+import { ApiCallService } from '../services/api-call.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-forgotpass',
@@ -9,7 +11,9 @@ import * as AOS from 'aos';
 })
 export class ForgotpassComponent implements OnInit {
   constructor(
-    public router: Router
+    public router: Router,
+    public apiCall: ApiCallService,
+    public _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -22,5 +26,23 @@ export class ForgotpassComponent implements OnInit {
 
   signin(){
     this.router.navigate(['home']);
+  }
+
+  forgotPass(email){
+    var param = {
+      "email"  : email
+    };
+    this.apiCall.postRequest('/login/forgotPassword',param).subscribe(data => {
+      this.openSnackBar(data['message']);
+    });
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, '', {
+      duration: 2000,
+      panelClass:['errorMessage'],
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
+    });
   }
 }

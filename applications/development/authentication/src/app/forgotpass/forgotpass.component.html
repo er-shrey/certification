@@ -53,10 +53,10 @@
                   <form class="form-box reset">
                       <h3 class="h4 text-black mb-4">Forgot Password</h3>
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Email Address">
+                        <input type="text" class="form-control" placeholder="Email Address" [(ngModel)]="formEmail" name="email">
                       </div>
                       <div class="form-group">
-                        <input type="button" class="btn btn-primary btn-pill btn-app-normal" value="Recover Password">
+                        <input type="button" class="btn btn-primary btn-pill btn-app-normal" value="Recover Password" (click)="forgotPass(formEmail)">
                       </div>
                     </form>
                 </div>

@@ -1,3 +1,9 @@
 .form-box.reset{
     min-height: 300px;
 }
+
+.login-link{
+    color: #007bff;
+    cursor: pointer;
+    float: right;
+}

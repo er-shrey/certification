@@ -22,7 +22,7 @@ const appRoutes:Routes = [
   { path: 'home',
     component: LoginComponent
   },
-  { path: 'resetPass',
+  { path: 'resetPass/:username/:token/',
     component: RecoverpassComponent
   },
   { path: 'forgotPass',

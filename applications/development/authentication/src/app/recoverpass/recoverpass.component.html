@@ -51,17 +51,21 @@
 
                 <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
                   <form class="form-box reset">
-                      <h3 class="h4 text-black mb-4">Reset Password</h3>
-                      <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password">
-                      </div>
-                      <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Confirm Password">
-                      </div>
-                      <div class="form-group">
-                        <input type="button" class="btn btn-primary btn-pill btn-app-normal" value="Reset Password">
-                      </div>
-                    </form>
+                    <h3 class="h4 text-black mb-4">Reset Password</h3>
+                    <div class="form-group" *ngIf="message == ''">
+                      <input type="password" class="form-control" placeholder="Password" name="npassword" [(ngModel)]="password">
+                    </div>
+                    <div class="form-group" *ngIf="message == ''">
+                      <input type="password" class="form-control" placeholder="Confirm Password" name="cpassword" [(ngModel)]="cpassword">
+                    </div>
+                    <div class="form-group" *ngIf="message == ''">
+                      <input type="button" class="btn btn-primary btn-pill btn-app-normal" value="Reset Password" (click)="resetPass(password)" [disabled]="password != cpassword || password == undefined || cpassword == undefined || disableResetBtn">
+                    </div>
+                    <div *ngIf="message != ''">
+                      {{message}}
+                      <span class="login-link" (click)="signin()">Login Here</span>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>

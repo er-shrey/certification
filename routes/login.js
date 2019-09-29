@@ -66,70 +66,53 @@ router.post('/loginValidate', function(req, res, next) {
 
 router.post('/forgotPassword', function(req, res, next) {
 	request({
-		method: 'POST',
-		url: configApi.baseHeader+configApi.apiUrls.forgotPassword,
-		form:{	
-			username   :	req.body.param["username"],
-			baseHeader :	configApi.emailHeader
+		url	:	configApi.baseHeader+"skillcall/forgotPassword",
+		qs	:	req.body,
+		method:	'POST',
+		json:	true, 
+		headers:{
+			'User-Agent':       'Super Agent/0.0.1',
+			'Content-Type':     'application/x-www-form-urlencoded',
 		}
-	}, function(error, response, body){
-		var data = JSON.parse(body);
-		if(error){			
-			res.json({
-				status  : "ERROR",
-				error	:  error
-			});
-		}else if(data.status=="Success" || data.message=="success"){
-			res.json({
-				status :	'SUCCESS',
-				message:	data
-			});
-		}else if(data.status=="Error" || data.message=="Does not seem to recognize the user.  Please check the email provided, or if the problem persists, contact your administrator"){
-			res.json({
-				status :	'FAILED',
-				message:	data
-			});
+	},function(error, response, body){
+		if(error){
+			console.log(error);
 		}else{
-			res.json({
-					status    : "ERROR",
-					message   : "Something went wrong! Please try again later."
-			});
+			var statusCode = response.statusCode;
+			if(statusCode !== 200){
+				res.status(statusCode).json(body);
+			}else{
+				res.json(body);
+			}
 		}
-	}); 
+	});
 });
 
 router.post('/resetPassword', function(req, res, next) {
-	var password= req.body["password"]; 
-	var token = req.body["token"];
+	var params = {
+		"password": b64DecodeUnicode(req.body.password),
+		"token": req.body.token,
+		"username": req.body.username,
+	};
 	request({
-		method: 'POST',
-		url: configApi.baseHeader+configApi.apiUrls.resetPassword,
-		form:{
-			token	:	req.body["token"],
-			newpass :	b64DecodeUnicode(req.body["password"])
+		url	:	configApi.baseHeader+"skillcall/changePassword",
+		qs	:	params,
+		method:	'POST',
+		json:	true, 
+		headers:{
+			'User-Agent':       'Super Agent/0.0.1',
+			'Content-Type':     'application/x-www-form-urlencoded',
 		}
 	},function(error, response, body){
-		var data = JSON.parse(body);
-		if(error){			
-			res.json({
-				status  : "ERROR",
-				error	:  error
-			});
-		}else if(data.status=="Success" || data.message=="success"){
-			res.json({
-				status :	'SUCCESS',
-				message:	data
-			});
-		}else if(data.status=="fail" || data.message=="fail"){
-			res.json({
-					status    : "ERROR",
-					message   : "Something went wrong! Please try again later."
-			});
+		if(error){
+			console.log(error);
 		}else{
-			res.json({
-					status    : "ERROR",
-					message   : "Something went wrong! Please try again later."
-			});
+			var statusCode = response.statusCode;
+			if(statusCode !== 200){
+				res.status(statusCode).json(body);
+			}else{
+				res.json(body);
+			}
 		}
 	});
 });
